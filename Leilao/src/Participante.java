@@ -9,7 +9,7 @@ public class Participante {
     private String enderecoParticipante;
     private String telefoneParticipante;
 
- public Participante(String idParticipante, String nomeParticipante, String senhaParticipante, String emailParticipante, String loginParticipante, String enderecoParticipante, String telefoneParticipante) {
+    public Participante(String idParticipante, String nomeParticipante, String senhaParticipante, String emailParticipante, String loginParticipante, String enderecoParticipante, String telefoneParticipante) {
         this.idParticipante = idParticipante;
         this.nomeParticipante = nomeParticipante;
         this.senhaParticipante = senhaParticipante;
@@ -38,6 +38,11 @@ public class Participante {
     public String getSenhaParticipante() {
         return senhaParticipante;
     }
+
+    public void setSenhaParticipante(String senhaParticipante) {
+        this.senhaParticipante = senhaParticipante;
+    }
+
     public String getEmailParticipante() {
         return emailParticipante;
     }

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class ItemLeilao {
     private String idItem;
     private String nomeItem;    
@@ -5,13 +7,16 @@ public class ItemLeilao {
     private double lanceMin;
     private boolean itenArrematado;
     private Lance lanceArrematante;
-public ItemLeilao(String idItem, String nomeItem, String descricaoItem, double lanceMin, boolean itenArrematado, Lance lanceArrematante) {
+    private ArrayList<Lance> lances;
+
+    public ItemLeilao(String idItem, String nomeItem, String descricaoItem, double lanceMin, boolean itenArrematado, Lance lanceArrematante) {
         this.idItem = idItem;
         this.nomeItem = nomeItem;
         this.descricaoItem = descricaoItem;
         this.lanceMin = lanceMin;
         this.itenArrematado = itenArrematado;
         this.lanceArrematante = lanceArrematante;
+        this.lances = new ArrayList<>();
     }
 
     public String getIdItem() {
@@ -60,5 +65,29 @@ public ItemLeilao(String idItem, String nomeItem, String descricaoItem, double l
 
     public void setLanceArrematante(Lance lanceArrematante) {
         this.lanceArrematante = lanceArrematante;
+    }
+
+    public boolean registrarItem(String nome, String descricao, double lanceMin) {
+        this.nomeItem = nome;
+        this.descricaoItem = descricao;
+        this.lanceMin = lanceMin;
+        return true;
+    }
+
+    public void arrematar(Lance lance) {
+        if (lance != null && lance.getValorLance() >= this.lanceMin) {
+            this.lanceArrematante = lance;
+            this.itenArrematado = true;
+        }
+    }
+
+    public void adicionarLance(Lance lance) {
+        if (lance != null) {
+            this.lances.add(lance);
+        }
+    }
+
+    public ArrayList<Lance> listarLances() {
+        return this.lances;
     }
 }

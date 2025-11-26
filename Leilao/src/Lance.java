@@ -1,13 +1,14 @@
 import java.util.ArrayList;
+
 public class Lance {
     private String idLance;
     private Participante participante;
-    private double valorLance;
-    private String horarioLance;
-    private String dataLance;
     private ItemLeilao itemLeilao;
+    private double valorLance;
+    private String dataLance;
+    private String horarioLance;
 
-public Lance(String idLance, Participante participante, double valorLance, String horarioLance, String dataLance, ItemLeilao itemLeilao) {
+    public Lance(String idLance, Participante participante, double valorLance, String horarioLance, String dataLance, ItemLeilao itemLeilao) {
         this.idLance = idLance;
         this.participante = participante;
         this.valorLance = valorLance;

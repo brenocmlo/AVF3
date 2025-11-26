@@ -5,7 +5,11 @@ public class Leilao {
     private String nomeLeilao;
     private String dataInicioLeilao;
     private String dataFimLeilao;
+    private String horaInicioLeilao;
+    private String horaFimLeilao;
     private boolean statusLeilao;
+    private ArrayList<ItemLeilao> itensLeilao;
+    private ArrayList<Lance> lancesLeilao;
 
     public Leilao(String idLeilao, String nomeLeilao, String dataInicioLeilao, String dataFimLeilao, boolean statusLeilao) {
         this.idLeilao = idLeilao;
@@ -13,6 +17,8 @@ public class Leilao {
         this.dataInicioLeilao = dataInicioLeilao;
         this.dataFimLeilao = dataFimLeilao;
         this.statusLeilao = statusLeilao;
+        this.itensLeilao = new ArrayList<>();
+        this.lancesLeilao = new ArrayList<>();
     }
 
     public String getIdLeilao() {
@@ -45,6 +51,22 @@ public class Leilao {
 
     public void setDataFimLeilao(String dataFimLeilao) {
         this.dataFimLeilao = dataFimLeilao;
+    }
+
+    public String getHoraInicioLeilao() {
+        return horaInicioLeilao;
+    }
+
+    public void setHoraInicioLeilao(String horaInicioLeilao) {
+        this.horaInicioLeilao = horaInicioLeilao;
+    }
+
+    public String getHoraFimLeilao() {
+        return horaFimLeilao;
+    }
+
+    public void setHoraFimLeilao(String horaFimLeilao) {
+        this.horaFimLeilao = horaFimLeilao;
     }
 
     public boolean isStatusLeilao() {
@@ -86,5 +108,29 @@ public class Leilao {
 
     public ArrayList<Leilao> listarLeiloes(ArrayList<Leilao> leiloes) {
         return leiloes;
+    }
+
+    public void adicionarItem(ItemLeilao item) {
+        if (item != null) {
+            this.itensLeilao.add(item);
+        }
+    }
+
+    public void removerItem(ItemLeilao item) {
+        this.itensLeilao.remove(item);
+    }
+
+    public ArrayList<ItemLeilao> listarItens() {
+        return this.itensLeilao;
+    }
+
+    public void adicionarLance(Lance lance) {
+        if (lance != null) {
+            this.lancesLeilao.add(lance);
+        }
+    }
+
+    public ArrayList<Lance> listarLances() {
+        return this.lancesLeilao;
     }
 }
