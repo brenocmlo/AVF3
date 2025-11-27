@@ -1,5 +1,8 @@
 import java.util.ArrayList;
-
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
 public class Leilao {
     private String idLeilao;
     private String nomeLeilao;
@@ -9,7 +12,7 @@ public class Leilao {
     private String horaFimLeilao;
     private boolean statusLeilao;
     private ArrayList<ItemLeilao> itensLeilao;
-    private ArrayList<Lance> lancesLeilao;
+    
 
     public Leilao(String idLeilao, String nomeLeilao, String dataInicioLeilao, String dataFimLeilao, boolean statusLeilao) {
         this.idLeilao = idLeilao;
@@ -18,7 +21,7 @@ public class Leilao {
         this.dataFimLeilao = dataFimLeilao;
         this.statusLeilao = statusLeilao;
         this.itensLeilao = new ArrayList<>();
-        this.lancesLeilao = new ArrayList<>();
+    
     }
 
     public String getIdLeilao() {
@@ -105,32 +108,70 @@ public class Leilao {
         this.statusLeilao = false;
         return true;
     }
+   
+    public boolean registrarLeilao(java.util.Scanner scanner) {
+        System.out.println("\n--- CRIAR LEILÃO ---");
+        System.out.print("ID do Leilão: ");
+        String id = scanner.nextLine();
+        System.out.print("Descrição: ");
+        String descricao = scanner.nextLine();
+        System.out.print("Data Início (DD/MM/YYYY): ");
+        String dataInicio = scanner.nextLine();
+        System.out.print("Data Fim (DD/MM/YYYY): ");
+        String dataFim = scanner.nextLine();
+        System.out.print("Hora Início (HH:MM): ");
+        String horaInicio = scanner.nextLine();
+        System.out.print("Hora Fim (HH:MM): ");
+        String horaFim = scanner.nextLine();
 
-    public ArrayList<Leilao> listarLeiloes(ArrayList<Leilao> leiloes) {
+        Leilao leilao = new Leilao(id, descricao, dataInicio, dataFim, false);
+        leilao.setHoraInicioLeilao(horaInicio);
+        leilao.setHoraFimLeilao(horaFim);
+        try (java.io.FileWriter fw = new java.io.FileWriter("leiloes.txt", true);
+             java.io.BufferedWriter bw = new java.io.BufferedWriter(fw)) {
+            // formato: id,descricao,dataInicio,dataFim,horaInicio,horaFim,status
+            bw.write(leilao.getIdLeilao() + "," + leilao.getNomeLeilao() + "," +
+                    leilao.getDataInicioLeilao() + "," + leilao.getDataFimLeilao() + "," +
+                    leilao.getHoraInicioLeilao() + "," + leilao.getHoraFimLeilao() + "," +
+                    leilao.isStatusLeilao());
+            bw.newLine();
+            System.out.println("Leilão criado com sucesso!");
+            return true;
+        } catch (java.io.IOException e) {
+            System.out.println("Erro ao salvar leilão: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public  ArrayList<Leilao> listarLeilao() {
+        ArrayList<Leilao> leiloes = new ArrayList<>();
+        try (java.io.FileReader fr = new java.io.FileReader("leiloes.txt");
+             java.io.BufferedReader br = new java.io.BufferedReader(fr)) {
+            String linha;
+            while ((linha = br.readLine()) != null) {
+                String[] dados = linha.split(",");
+                if (dados.length >= 7) {
+                    Leilao l = new Leilao(dados[0], dados[1], dados[2], dados[3], Boolean.parseBoolean(dados[6]));
+                    l.setHoraInicioLeilao(dados[4]);
+                    l.setHoraFimLeilao(dados[5]);
+                    leiloes.add(l);
+                } else if (dados.length >= 4) {
+                    Leilao l = new Leilao(dados[0], "", dados[1], dados[2], Boolean.parseBoolean(dados[3]));
+                    leiloes.add(l);
+                }
+            }
+        } catch (java.io.FileNotFoundException e) {
+            // retorna lista vazia
+        } catch (java.io.IOException e) {
+            System.out.println("Erro ao carregar leilões: " + e.getMessage());
+        }
         return leiloes;
     }
 
-    public void adicionarItem(ItemLeilao item) {
-        if (item != null) {
-            this.itensLeilao.add(item);
+    public Leilao buscarPorId(String id) {
+        for (Leilao l : listarLeilao()) {
+            if (l.getIdLeilao().equals(id)) return l;
         }
-    }
-
-    public void removerItem(ItemLeilao item) {
-        this.itensLeilao.remove(item);
-    }
-
-    public ArrayList<ItemLeilao> listarItens() {
-        return this.itensLeilao;
-    }
-
-    public void adicionarLance(Lance lance) {
-        if (lance != null) {
-            this.lancesLeilao.add(lance);
-        }
-    }
-
-    public ArrayList<Lance> listarLances() {
-        return this.lancesLeilao;
+        return null;
     }
 }
