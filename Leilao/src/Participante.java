@@ -1,4 +1,9 @@
 import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 
 public class Participante {
     private String idParticipante;
@@ -76,7 +81,7 @@ public class Participante {
         System.out.println("Endereço: " + enderecoParticipante);
         System.out.println("Telefone: " + telefoneParticipante);
     }      
-    public static boolean registrarInteractive(java.util.Scanner scanner) {
+    public  boolean registrarParticipante(java.util.Scanner scanner) {
         System.out.println("\n--- REGISTRAR PARTICIPANTE ---");
         System.out.print("ID: ");
         String id = scanner.nextLine();
@@ -94,8 +99,8 @@ public class Participante {
         String telefone = scanner.nextLine();
 
         Participante participante = new Participante(id, nome, senha, email, usuario, endereco, telefone);
-        try (java.io.FileWriter fw = new java.io.FileWriter("participantes.txt", true);
-             java.io.BufferedWriter bw = new java.io.BufferedWriter(fw)) {
+        try (FileWriter fw = new FileWriter("participantes.txt", true);
+             BufferedWriter bw = new BufferedWriter(fw)) {
             // salvar: id,nome,senha,email,telefone
             bw.write(participante.getIdParticipante() + "," + participante.getNomeParticipante() + "," +
                     participante.getSenhaParticipante() + "," + participante.getEmailParticipante() + "," +

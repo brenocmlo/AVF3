@@ -1,15 +1,16 @@
 import java.util.Scanner;
 
 public class App {
-    static Scanner scanner = new Scanner(System.in);
+    
 
-    public static void main(String[] args) {
-        menuPrincipal();
-        scanner.close();
-    }
+    public static void main(String[] args) throws Exception{
+        Scanner scanner = new Scanner(System.in);
+        Participante p = new Participante("", "", "", "", "", "", "");
+        Leilao l = new Leilao("", "", "", "", false);
+        ItemLeilao il = new ItemLeilao("", "", "", 0.0, false, null);
+        Lance lance = new Lance("", p, 0.0, "", "", il);
 
-    private static void menuPrincipal() {
-        boolean continuar = true;
+         boolean continuar = true;
         while (continuar) {
             System.out.println("\n=== SISTEMA DE LEILÃO ===");
             System.out.println("1. Registrar Participante");
@@ -27,25 +28,25 @@ public class App {
             
             switch (opcao) {
                 case 1:
-                    Participante.registrarInteractive(scanner);
+                    p.registrarParticpante(scanner);
                     break;
                 case 2:
-                    Participante.loginParticipante(scanner);
+                    p.loginParticipante(scanner);
                     break;
                 case 3:
-                    Leilao.registrarLeilao(scanner);
+                    l.registrarLeilao(scanner);
                     break;
                 case 4:
-                    Participante.listarPtcp();
+                    p.listarPtcp();
                     break;
                 case 5:
-                    listarLeiloes();
+                    l.listarLeiloes();
                     break;
                 case 6:
-                    Lance.registrarLance(scanner);
+                    lance.registrarLance(scanner);
                     break;
                 case 7:
-                    listarLances();
+                    lance.listarLances();
                     break;
                 case 0:
                     System.out.println("Encerrando sistema...");
@@ -55,28 +56,10 @@ public class App {
                     System.out.println("Opção inválida!");
             }
         }
+       
+    scanner.close();
     }
 
-   
-
-
-   
-
-    // private static void listarLances() {
-    //     System.out.println("\n--- LANCES REGISTRADOS ---");
-    //     java.util.ArrayList<Lance> lances = Lance.listarFromFile();
-    //     if (lances.isEmpty()) {
-    //         System.out.println("Nenhum lance registrado.");
-    //     } else {
-    //         for (Lance ln : lances) {
-    //             System.out.println("\n--- Lance ---");
-    //             System.out.println("ID Lance: " + ln.getIdLance());
-    //             System.out.println("Participante: " + ln.getParticipante().getNomeParticipante());
-    //             System.out.println("Item: " + ln.getItemLeilao().getNomeItem());
-    //             System.out.println("Valor: R$ " + ln.getValorLance());
-    //             System.out.println("Data: " + ln.getDataLance());
-    //             System.out.println("Horário: " + ln.getHorarioLance());
-    //         }
-    //     }
-    // }
+    
+       
 }
