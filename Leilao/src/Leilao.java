@@ -143,7 +143,8 @@ public class Leilao {
         }
     }
 
-    public  ArrayList<Leilao> listarLeilao() {
+    // renomeado para listarLeiloes (App espera esse nome)
+    public  ArrayList<Leilao> listarLeiloes() {
         ArrayList<Leilao> leiloes = new ArrayList<>();
         try (java.io.FileReader fr = new java.io.FileReader("leiloes.txt");
              java.io.BufferedReader br = new java.io.BufferedReader(fr)) {
@@ -169,7 +170,7 @@ public class Leilao {
     }
 
     public Leilao buscarPorId(String id) {
-        for (Leilao l : listarLeilao()) {
+        for (Leilao l : listarLeiloes()) {
             if (l.getIdLeilao().equals(id)) return l;
         }
         return null;

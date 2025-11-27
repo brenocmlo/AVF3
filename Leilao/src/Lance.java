@@ -78,7 +78,8 @@ public class Lance {
     }
 
     
-    public static boolean registrarLance(java.util.Scanner scanner) {
+    // tornou-se método de instância (antes estava static)
+    public boolean registrarLance(java.util.Scanner scanner) {
         System.out.println("\n--- REGISTRAR LANCE ---");
         System.out.print("ID do Lance: ");
         String idLance = scanner.nextLine();
@@ -99,7 +100,9 @@ public class Lance {
         System.out.print("Horário do Lance (HH:MM): ");
         String horarioLance = scanner.nextLine();
 
-        Participante participante = Participante.buscarPorId(idParticipante);
+        // usar instância de Participante para buscar (buscarPorId é método de instância)
+        Participante buscadorP = new Participante("", "", "", "", "", "", "");
+        Participante participante = buscadorP.buscarPorId(idParticipante);
         ItemLeilao item = ItemLeilao.buscarPorId(idItem);
 
         if (participante == null) {
@@ -112,7 +115,8 @@ public class Lance {
         }
 
         Lance lance = new Lance(idLance, participante, valorLance, horarioLance, dataLance, item);
-        if (!lance.registrarLance(item, participante, valorLance)) {
+        // tenta adicionar lance ao item (regra simples: >= lanceMin)
+        if (valorLance < item.getLanceMin()) {
             System.out.println("Lance inválido! Valor abaixo do mínimo do item.");
             return false;
         }
@@ -131,7 +135,8 @@ public class Lance {
         }
     }
 
-    public  ArrayList<Lance> listarLance() {
+    // renomeado para coincidir com uso no App
+    public  ArrayList<Lance> listarLances() {
         ArrayList<Lance> lista = new ArrayList<>();
         try (java.io.FileReader fr = new java.io.FileReader("lances.txt");
              java.io.BufferedReader br = new java.io.BufferedReader(fr)) {
@@ -145,7 +150,9 @@ public class Lance {
                     double valor = Double.parseDouble(d[3].trim());
                     String data = d[4].trim();
                     String horario = d[5].trim();
-                    Participante p = Participante.buscarPorId(idParticipante);
+                    // buscar participante via instância
+                    Participante busc = new Participante("", "", "", "", "", "", "");
+                    Participante p = busc.buscarPorId(idParticipante);
                     ItemLeilao item = ItemLeilao.buscarPorId(idItem);
                     if (p == null) p = new Participante(idParticipante, idParticipante, "", "", idParticipante, "", "");
                     if (item == null) item = new ItemLeilao(idItem, idItem, "", 0.0, false, null);

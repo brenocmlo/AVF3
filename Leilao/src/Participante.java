@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.BufferedReader;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 
 public class Participante {
@@ -120,15 +119,14 @@ public class Participante {
         System.out.print("Senha: ");
         String senha = scanner.nextLine();
 
-        boolean ok = false;
-        for (Participante p : Participante.listarPtcp()) {
-            if (p.loginParticipante(usuario, senha) != null) {
+        for (Participante p : this.listarPtcp()) {
+            if (p.getLoginParticipante().equals(usuario) && p.getSenhaParticipante().equals(senha)) {
                 System.out.println("Login bem-sucedido! Bem-vindo, " + p.getNomeParticipante());
-                ok = true;
-                break;
+                return p;
             }
         }
-        if (!ok) System.out.println("Usuário ou senha inválidos!");
+        System.out.println("Usuário ou senha inválidos!");
+        return null;
     }
     public ArrayList<Participante> listarPtcp() {
         ArrayList<Participante> participantes = new ArrayList<>();

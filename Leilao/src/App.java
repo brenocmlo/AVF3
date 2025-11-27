@@ -28,7 +28,8 @@ public class App {
             
             switch (opcao) {
                 case 1:
-                    p.registrarParticpante(scanner);
+                    // corrigido nome do método
+                    p.registrarParticipante(scanner);
                     break;
                 case 2:
                     p.loginParticipante(scanner);
@@ -37,16 +38,29 @@ public class App {
                     l.registrarLeilao(scanner);
                     break;
                 case 4:
-                    p.listarPtcp();
+                    // mostrar participantes lidos do arquivo
+                    for (Participante pp : p.listarPtcp()) {
+                        pp.mostrarParticipante();
+                        System.out.println("-----------------");
+                    }
                     break;
                 case 5:
-                    l.listarLeiloes();
+                    // método renomeado em Leilao
+                    for (Leilao le : l.listarLeiloes()) {
+                        le.mostraInfoLeilao();
+                        System.out.println("-----------------");
+                    }
                     break;
                 case 6:
+                    // agora é método de instância em Lance
                     lance.registrarLance(scanner);
                     break;
                 case 7:
-                    lance.listarLances();
+                    // listar e mostrar lances
+                    for (Lance ln : lance.listarLances()) {
+                        ln.mostrarLances();
+                        System.out.println("-----------------");
+                    }
                     break;
                 case 0:
                     System.out.println("Encerrando sistema...");
